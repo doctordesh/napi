@@ -1,0 +1,9 @@
+* things
+
+https://webkit.org/blog/5610/more-responsive-tapping-on-ios/ -- fast click is
+/supposed/ to work, but it does not
+
+read more https://johan.im/writings/ios-homescreen-web-app/
+
+* CSS themes
+https://nostalgic-css.github.io/NES.css/

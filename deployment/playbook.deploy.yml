@@ -1,0 +1,25 @@
+---
+- name: Deploy Pizza files
+  hosts: servers
+  user: root
+  become: yes
+  tasks:
+    - name: Copy files to server
+      copy:
+        src: "../{{ item }}"
+        dest: "/var/www/napi/"
+        owner: www-data
+        group: www-data
+      loop:
+        - "index.html"
+    - name: Copy files to server
+      copy:
+        src: "../static/{{ item }}"
+        dest: "/var/www/napi/static"
+        owner: www-data
+        group: www-data
+      loop:
+        - "reset.css"
+        - "script.js"
+        - "manifest.json"
+        - "DepartureMono-Regular.woff2"

@@ -1,0 +1,19 @@
+---
+- name: Install certbot and launch things
+  hosts: servers
+  user: root
+  become: yes
+
+  tasks:
+    - name: Install certbot and nginx plugin
+      package:
+        name:
+          - certbot
+          - python3-certbot-nginx
+        state: present
+
+    - name: Setup cronjob for automatic renew
+      cron:
+        name: "auto-renew of certificate"
+        hour: 5
+        job: certbot renew

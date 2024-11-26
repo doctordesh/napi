@@ -1,0 +1,36 @@
+---
+- name: Install and configure nginx for static website hosting
+  hosts: servers
+  user: root
+  become: yes
+
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: latest
+        update_cache: yes
+
+    - name: Remove default nginx configuration
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Add nginx configuration
+      copy:
+        src: ./nginx.conf
+        dest: /etc/nginx/sites-available/pizza.abitmighty.com
+        group: root
+        mode: '0644'
+
+    - name: Enable website configuration
+      file:
+        src: /etc/nginx/sites-available/pizza.abitmighty.com
+        dest: /etc/nginx/sites-enabled/pizza.abitmighty.com
+        state: link
+
+    - name: Ensure nginx is running
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: yes
