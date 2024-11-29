@@ -2,11 +2,37 @@
 <html lang="en">
     <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
+	<meta name="mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+	<link rel="apple-touch-icon" href="/static/logo.png">
+
+	<!-- iPhone Xs Max (1242px x 2688px) -->
+	<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" href="/static/apple-splash-1242x2688.png">
+	<!-- iPhone Xr (828px x 1792px) -->
+	<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" href="/static/apple-splash-828x1792.png">
+	<!-- iPhone X, Xs (1125px x 2436px) -->
+	<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" href="/static/apple-splash-1125x2436.png">
+	<!-- iPhone 8 Plus, 7 Plus, 6s Plus, 6 Plus (1242px x 2208px) -->
+	<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)" href="/static/apple-splash-1242x2208.png">
+	<!-- iPhone 8, 7, 6s, 6 (750px x 1334px) -->
+	<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="/static/apple-splash-750x1334.png">
+	<!-- iPad Pro 12.9" (2048px x 2732px) -->
+	<link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" href="/static/apple-splash-2048x2732.png">
+	<!-- iPad Pro 11” (1668px x 2388px) -->
+	<link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" href="/static/apple-splash-1668x2388.png">
+	<!-- iPad Pro 10.5" (1668px x 2224px) -->
+	<link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" href="/static/apple-splash-1668x2224.png">
+	<!-- iPad Mini, Air (1536px x 2048px) -->
+	<link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" href="/static/apple-splash-1536x2048.png">
+
 
 	<link rel="manifest" href="/static/manifest.json" />
-	<title>Pizza Recipe</title>
+	<title>Napolitan Pizza</title>
 
 	<link rel="stylesheet" href="/static/reset.css" />
 
@@ -36,8 +62,12 @@
 	     --color-white:           #eeeeee;
 
 	     --color-accent: #e96afe;
+	     --color-primary-light: #fff97a;
 	     --color-primary: #fff75b;
-	     --color-lorem: #2ff9ff;
+	     --color-primary-dark: #d3cc49;
+	     --color-primary-darker: #a39d36;
+	     --color-cyan: #00e3ea;
+	     --color-cyan-dark: #0bdfe6;
 	 }
 
 	 html {
@@ -52,7 +82,13 @@
 	     padding: 0;
 	     margin: 0;
 	     color: var(--color-black);
-	     background: var(--color-black);
+	     background: repeating-linear-gradient(
+		 45deg,
+		 var(--color-cyan),
+		 var(--color-cyan) 4px,
+		 var(--color-cyan-dark) 4px,
+		 var(--color-cyan-dark) 8px
+	     );
 	 }
 
 	 h2 {
@@ -68,10 +104,29 @@
 	     color: var(--color-accent);
 	 }
 
+
+
+	 hr {
+	     border: 0;
+	     margin: 0;
+	     padding: 0;
+	     height: 30px;
+	     background: repeating-linear-gradient(
+		 -45deg,
+		 var(--color-primary),
+		 var(--color-primary) 4px,
+		 var(--color-accent) 4px,
+		 var(--color-accent) 8px
+	     );
+	     border-top: 4px solid var(--color-accent);
+	     border-bottom: 4px solid var(--color-accent);
+	 }
+
 	 section {
 	     &.content {
 		 background: var(--color-white);
 		 padding: 1em 1em 3em 1em;
+		 text-shadow: 1px 1px 0px white;
 
 		 & .recipe h2 {
 		     margin-top: 2em;
@@ -80,14 +135,28 @@
 
 	     &.header {
 		 text-align: center;
-		 background: var(--color-black);
-		 color: var(--color-white);
+		 /* background: var(--color-black); */
+		 background: var(--color-cyan);
+		 background: repeating-linear-gradient(
+		     45deg,
+		     var(--color-cyan),
+		     var(--color-cyan) 4px,
+		     var(--color-cyan-dark) 4px,
+		     var(--color-cyan-dark) 8px
+		 );
+		 border-bottom: 10px;
 		 margin: 0;
 		 padding: 1em 0;
 
+		 & h1, & p.sub-line {
+		     text-shadow: -1px -1px 0px black, 1px -1px 0px black, 1px 1px 0px black, -1px 1px 0px black, 5px 5px 0px var(--color-accent), 3px 3px 5px white;
+		     color: var(--color-primary);
+		     letter-spacing: -1px;
+		 }
+
 		 & h1 {
 		     text-transform: uppercase;
-		     font-size: 1.5em;
+		     font-size: 2em;
 		     margin: 0 0 0.25em 0;
 		     padding: 0;
 		 }
@@ -95,11 +164,13 @@
 		     margin: 0;
 		     padding: 0;
 		     font-size: 0.75em;
+		     color: var(--color-black);
+		     text-shadow: 1px 1px 0px white;
 		 }
 
 		 & .sub-line {
 		     text-transform: uppercase;
-		     font-size: 1.5em;
+		     font-size: 2em;
 		     margin: -25px 0 0 0;
 		     padding: 0;
 		     font-weight: 700;
@@ -108,8 +179,15 @@
 
 	     &.footer {
 		 text-align: center;
-		 background: var(--color-black);
-		 color: var(--color-white);
+		 background: repeating-linear-gradient(
+		     45deg,
+		     var(--color-cyan),
+		     var(--color-cyan) 4px,
+		     var(--color-cyan-dark) 4px,
+		     var(--color-cyan-dark) 8px
+		 );
+		 text-shadow: 1px 1px 0px white;
+		 color: var(--color-black);
 		 margin: 0;
 		 padding: 1em 0;
 
@@ -148,21 +226,22 @@
 		     border-left-color: var(--color-primary-light);
 		     border-right-color: var(--color-primary-dark);
 		     border-bottom-color: var(--color-primary-dark);
-		     box-shadow: inset 0 0 15px var(--color-primary-light);
+		     /* box-shadow: inset 0 0 15px var(--color-primary-light); */
 
 	 	     & >input {
 			 display: none;
 		     }
 		 }
 
-		 & label:has(> input:checked), :active, :focus {
+		 & label:has(> input[type="radio"]:checked) {
 		     color: var(--color-white);
 		     background-color: var(--color-primary-dark);
 		     border-top-color: var(--color-primary-darker);
 		     border-left-color: var(--color-primary-darker);
 		     border-right-color: var(--color-primary-light);
 		     border-bottom-color: var(--color-primary-light);
-		     box-shadow: inset 0 0 15px var(--color-primary-darker);
+		     text-shadow: -1px -1px 0px rgba(0, 0, 0, 0.25);
+		     /* box-shadow: inset 0 0 15px var(--color-primary-darker); */
 		 }
 
 		 & >button {
@@ -182,7 +261,7 @@
 		     border-left-color: var(--color-primary-light);
 		     border-right-color: var(--color-primary-dark);
 		     border-bottom-color: var(--color-primary-dark);
-		     box-shadow: inset 0 0 15px var(--color-primary-light);
+		     /* box-shadow: inset 0 0 15px var(--color-primary-light); */
 
 	 	     &:active {
 			 color: var(--color-white);
@@ -191,22 +270,25 @@
 			 border-left-color: var(--color-primary-darker);
 			 border-right-color: var(--color-primary-light);
 			 border-bottom-color: var(--color-primary-light);
-			 box-shadow: inset 0 0 15px var(--color-primary-darker);
+			 /* box-shadow: inset 0 0 15px var(--color-primary-darker); */
 		     }
 		 }
 
 		 & >input {
 		     flex-grow: 1;
-		     /* border-top: 4px solid var(--color-accent-dark);
-			border-bottom: 4px solid var(--color-accent-dark);
-			border-left: 0;
-			border-right: 0; */
-		     border: 2px solid var(--color-accent-dark);
-		     box-shadow: inset 0 0 15px var(--color-accent-dark);
+		     border-top: 4px solid rgba(0,0,0,0.15);
+		     border-right: 4px solid rgba(255,255,255,0.15);
+		     border-bottom: 4px solid rgba(255,255,255,0.15);
+		     border-left: 4px solid rgba(0,0,0,0.15);
+		     /* box-shadow: inset 0 0 15px var(--color-accent-dark); */
 		     text-align: center;
 		     border-radius: 0;
 		     background-color: var(--color-accent);
 		     color: var(--color-white);
+
+		     &:active, &:focus {
+			 outline: none;
+		     }
 		 }
 	     }
 	 }
@@ -231,9 +313,54 @@
 		 text-align: right;
 	     }
 	 }
+
+	 #logo, #splash {
+	     position: absolute;
+	     z-index: 1;
+	     text-align: center;
+	     border: 5px solid black;
+	     margin: 10px;
+
+	     background: repeating-linear-gradient(
+		 45deg,
+		 var(--color-cyan),
+		 var(--color-cyan) 16px,
+		 var(--color-cyan-dark) 16px,
+		 var(--color-cyan-dark) 32px
+	     );
+
+	     font-weight: bold;
+	     text-shadow: -3px -3px 0px black, 3px -3px 0px black, 3px 3px 0px black, -3px 3px 0px black, 14px 14px 0px var(--color-accent), 3px 3px 3px white;
+	     color: var(--color-primary);
+	     font-size: 200px;
+	     line-height: calc(1em * 0.85);
+	     letter-spacing: -5px;
+	 }
+	 #logo {
+	     width: 500px;
+	     height: 500px;
+	     padding-top: 65px;
+	     padding-right: 10px;
+	 }
+	 #splash {
+	     width: 750px;
+	     height: 1334px;
+	     padding-top: 265px;
+	     padding-right: 10px;
+	 }
+
 	</style>
     </head>
     <body>
+
+	<!-- <div id="logo">
+	     NA<br />PI
+	     </div> -->
+
+	<!-- <div id="splash">
+	     NA<br />PI
+	     </div>
+	-->
 	<section class="header">
 
 
@@ -244,6 +371,9 @@
 	    <p class="sub-line">____________</p>
 	    <p>Napolitan pizza calculator</p>
 	</section>
+
+	<hr />
+
 	<section class="content">
 	    <section>
 		<h2>Configuration</h2>
@@ -255,7 +385,7 @@
 			<legend>Number of pizzas</legend>
 			<div class="form-group">
 			    <button id="number-of-pizzas-decrement">−</button>
-			    <input type="number" id="field-number-of-pizzas" pattern="[0-9]*" onfocus="this.value = '';" value="1" min="1" max="1000" />
+			    <input type="number" id="field-number-of-pizzas" pattern="[0-9]*" value="1" min="1" max="1000" />
 			    <button id="number-of-pizzas-increment">+</button>
 			</div>
 		    </fieldset>
@@ -264,7 +394,7 @@
 			<legend>Weight per dough ball (grams)</legend>
 			<div class="form-group">
 			    <button id="weight-dough-ball-decrement">−</button>
-			    <input type="number" id="field-weight-dough-ball" pattern="[0-9]*" onfocus="this.value = '';" value="240" min="0" max="1000" />
+			    <input type="number" id="field-weight-dough-ball" pattern="[0-9]*" value="240" min="0" max="1000" />
 			    <button id="weight-dough-ball-increment">+</button>
 			</div>
 		    </fieldset>
@@ -273,7 +403,7 @@
 			<legend>Water (%)</legend>
 			<div class="form-group">
 			    <button id="water-decrement">−</button>
-			    <input type="number" id="field-water" pattern="[0-9]*" onfocus="this.value = '';" value="68" min="0" max="100" />
+			    <input type="number" id="field-water" pattern="[0-9]*" value="68" min="0" max="100" />
 			    <button id="water-increment">+</button>
 			</div>
 		    </fieldset>
@@ -319,6 +449,9 @@
 		</table>
 	    </section>
 	</section>
+
+	<hr />
+
 	<section class="footer">
 	    <p>by abitmighty.com</p>
 	</section>

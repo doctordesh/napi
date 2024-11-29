@@ -2,8 +2,6 @@ function incdecrement(updateFunction, field, step) {
     return function(event) {
 	event.preventDefault();
 
-	console.log("incdecrement", event.type);
-
 	var value = parseInt(field.value);
 	value += step;
 
@@ -15,7 +13,6 @@ function incdecrement(updateFunction, field, step) {
 	}
 
 	if(min != null) {
-	    console.log(value, parseInt(min));
 	    value = Math.max(value, parseInt(min));
 	}
 
@@ -45,9 +42,71 @@ function computeRecipe(fieldNumberOfPizzas, fieldWeightDoughBall, fieldWater, fi
 	resultSalt.innerHTML = String(roundToDecimals(weightSalt, 0));
 	resultYeast.innerHTML = String(roundToDecimals(weightYeast, yeastDecimals));
     }
+};
+
+// --------------------------------------------------
+// Input fields
+
+function inputOnFocus() {
+    return function(event) {
+	    event.target.select();
+    }
 }
 
-document.addEventListener("DOMContentLoaded", function(event) {
+function inputOnBlur(updateFunction) {
+    return function(event) {
+	var value = parseInt(event.target.value.trim());
+	if(Object.is(value, NaN)) {
+	    event.target.value = "1";
+	}
+	updateFunction();
+    }
+}
+
+function inputUpdate(updateFunction) {
+    return function(event) {
+	updateFunction();
+    }
+}
+
+// --------------------------------------------------
+// Persistance
+
+function store(fieldNumberOfPizzas, fieldWeightDoughBall, fieldWater, fieldFreshYeast, fieldDryYeast, update) {
+    return function() {
+	update()
+
+	localStorage.setItem(fieldNumberOfPizzas.id, fieldNumberOfPizzas.value);
+	localStorage.setItem(fieldWeightDoughBall.id, fieldWeightDoughBall.value);
+	localStorage.setItem(fieldWater.id, fieldWater.value);
+	localStorage.setItem(fieldFreshYeast.id, String(fieldFreshYeast.checked));
+	localStorage.setItem(fieldDryYeast.id, String(fieldDryYeast.checked))
+    }
+}
+
+function load(fieldNumberOfPizzas, fieldWeightDoughBall, fieldWater, fieldFreshYeast, fieldDryYeast) {
+    // Number fields
+    var numberFields = [fieldNumberOfPizzas, fieldWeightDoughBall, fieldWater]
+    for(var i = 0; i < numberFields.length; i++) {
+	var value = parseInt(localStorage.getItem(numberFields[i].id));
+	if(Object.is(value, NaN) == false) {
+	    numberFields[i].value = value;
+	}
+    }
+
+    // Radio buttons
+    if(localStorage.getItem(fieldFreshYeast.id) === "true") {
+	fieldFreshYeast.checked = true;
+    }
+    if(localStorage.getItem(fieldDryYeast.id) === "true") {
+	fieldDryYeast.checked = true;
+    }
+}
+
+	// --------------------------------------------------
+	// Setup
+
+	document.addEventListener("DOMContentLoaded", function(event) {
 
     var fieldFreshYeast = document.getElementById("field-fresh-yeast");
     var fieldDryYeast = document.getElementById("field-dry-yeast");
@@ -61,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var resultYeast = document.getElementById("result-yeast");
 
     var updateFunction = computeRecipe(fieldNumberOfPizzas, fieldWeightDoughBall, fieldWater, fieldFreshYeast, fieldDryYeast, resultFlour, resultWater, resultSalt, resultYeast);
+    updateFunction = store(fieldNumberOfPizzas, fieldWeightDoughBall, fieldWater, fieldFreshYeast, fieldDryYeast, updateFunction);
 
     document.getElementsByTagName("form")[0].addEventListener("submit", function(e) {
 	e.preventDefault();
@@ -83,6 +143,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     fieldFreshYeast.addEventListener("change", updateFunction);
     fieldDryYeast.addEventListener("change", updateFunction);
+
+    fieldNumberOfPizzas.onfocus = inputOnFocus();
+    fieldWeightDoughBall.onfocus = inputOnFocus();
+    fieldWater.onfocus = inputOnFocus();
+
+    fieldNumberOfPizzas.onblur = inputOnBlur(updateFunction);
+    fieldWeightDoughBall.onblur = inputOnBlur(updateFunction);
+    fieldWater.onblur = inputOnBlur(updateFunction);
+
+    fieldNumberOfPizzas.onchange = inputUpdate(updateFunction);
+    fieldWeightDoughBall.onchange = inputUpdate(updateFunction);
+    fieldWater.onchange = inputUpdate(updateFunction);
+
+    fieldNumberOfPizzas.onkeyup = inputUpdate(updateFunction);
+    fieldWeightDoughBall.onkeyup = inputUpdate(updateFunction);
+    fieldWater.onkeyup = inputUpdate(updateFunction);
+
+    load(fieldNumberOfPizzas, fieldWeightDoughBall, fieldWater, fieldFreshYeast, fieldDryYeast);
 
     updateFunction();
 })

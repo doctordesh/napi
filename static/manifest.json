@@ -2,5 +2,8 @@
     "name": "Napolitan Pizza",
     "scope": "/",
     "display": "standalone",
-    "background_color": "#333333"
+    "background_color": "#00e3ea",
+    "icons": [{
+	"src": "static/logo.png"
+    }]
 }
