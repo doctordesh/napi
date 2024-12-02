@@ -124,7 +124,13 @@
 
 	 section {
 	     &.content {
-		 background: var(--color-white);
+		 background: repeating-linear-gradient(
+		     45deg,
+		     var(--color-white),
+		     var(--color-white) 4px,
+		     #ececec 4px,
+		     #ececec 8px
+		 );
 		 padding: 1em 1em 3em 1em;
 		 text-shadow: 1px 1px 0px white;
 
