@@ -5,5 +5,7 @@ https://webkit.org/blog/5610/more-responsive-tapping-on-ios/ -- fast click is
 
 read more https://johan.im/writings/ios-homescreen-web-app/
 
+notch cover: https://itnext.io/make-your-pwas-look-handsome-on-ios-fd8fdfcd5777
+
 * CSS themes
 https://nostalgic-css.github.io/NES.css/
