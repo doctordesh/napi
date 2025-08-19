@@ -31,11 +31,17 @@ function computeRecipe(fieldNumberOfPizzas, fieldWeightDoughBall, fieldWater, fi
 	    yeastDecimals = 2;
 	}
 
-	var totalWeight = fieldNumberOfPizzas.value * fieldWeightDoughBall.value;
-	var weightFlour = totalWeight / 1.7125; // magic conversion from the math
-	var weightWater = weightFlour * (fieldWater.value / 100);
-	var weightSalt = weightFlour * 0.03; // 3% salt
-	var weightYeast = weightFlour * 0.0025 * yeastConversion; // 0.25% fresh yeast
+	let numberOfPizzas = fieldNumberOfPizzas.value;
+	let weightDoughBall = fieldWeightDoughBall.value;
+	let waterPercentage = parseInt(fieldWater.value);
+
+	let totalWeight = numberOfPizzas * weightDoughBall;
+	let whole = 100 + waterPercentage + 3;
+	let weightFlour = totalWeight * (100 / whole);
+	let weightWater = totalWeight * (waterPercentage / whole);
+	let weightSalt = totalWeight * (3 / whole); // 3% salt
+	let weightYeast = weightFlour * 0.0025 * yeastConversion; // 0.25% fresh yeast and 14/50:th for dry yeast
+
 
 	resultFlour.innerHTML = String(roundToDecimals(weightFlour, 0));
 	resultWater.innerHTML = String(roundToDecimals(weightWater, 0));
